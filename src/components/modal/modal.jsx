@@ -32,56 +32,7 @@ const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
   };
 
   return (
-    // <Modal isOpen={isOpen} backdrop={true}>
-    //   <ModalHeader toggle={closeModal}>Edit User Details</ModalHeader>
-    //   <ModalBody>
-    //     <FormGroup>
-    //       <Label for="name">Name:</Label>
-    //       <Input
-    //         type="text"
-    //         id="name"
-    //         name="name"
-    //         value={userData?.name}
-    //         onChange={handleChange}
-    //       />
-
-    //       <Label for="email">Email:</Label>
-    //       <Input
-    //         type="text"
-    //         id="email"
-    //         name="email"
-    //         value={userData?.email}
-    //         onChange={handleChange}
-    //       />
-
-    //       <Label for="phone">Phone:</Label>
-    //       <Input
-    //         type="text"
-    //         id="phone"
-    //         name="phone"
-    //         value={userData?.phone}
-    //         onChange={handleChange}
-    //       />
-
-    //       <Label for="website">Website:</Label>
-    //       <Input
-    //         type="text"
-    //         id="website"
-    //         name="website"
-    //         value={userData?.website}
-    //         onChange={handleChange}
-    //       />
-    //     </FormGroup>
-    //   </ModalBody>
-    //   <ModalFooter>
-    //     <Button color="primary" onClick={handleSave}>
-    //       Ok
-    //     </Button>{" "}
-    //     <Button color="secondary" onClick={closeModal}>
-    //       Cancel
-    //     </Button>
-    //   </ModalFooter>
-    // </Modal>
+   
     <Modal isOpen={isOpen} backdrop={true}>
     <ModalHeader toggle={closeModal}>Edit User Details</ModalHeader>
     <ModalBody>
