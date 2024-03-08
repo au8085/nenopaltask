@@ -1,5 +1,5 @@
 import React, { useCallback, useState, lazy, Suspense } from "react";
-import "./Home.css";
+import "./home.css";
 import mockData from "../../utils/mockData.js";
 
 const ModalComponent = lazy(() => import("../modal/Modal.js"));
@@ -80,7 +80,7 @@ const Home = () => {
               {!toggle[index] ? (
                 <i className="far fa-heart red-color"></i>
               ) : (
-                <i className="fas fa-heart"></i>
+                <i className="fas fa-heart red-color"></i>
               )}
             </span>
             <span className="separator"></span>

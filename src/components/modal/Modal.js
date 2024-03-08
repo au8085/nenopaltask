@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { phoneRegex,emailRegex} from "../../constant/constant"
+import { phoneRegex, emailRegex } from "../../constant/constant";
 import {
   Button,
   Modal,
@@ -10,7 +10,7 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import "./Modal.css";
+import "./modal.css";
 
 const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
   const [userData, setUserData] = useState(initialValue || {});
@@ -34,27 +34,44 @@ const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
   };
 
   const handleSave = () => {
-    // Validate phone number
-    const phoneRegex = /^\d{10}$/;
+    // Validate if any required field is empty
+    const requiredFields = ["name", "email", "phone"]; // Add other required fields if necessary
+    const emptyFields = requiredFields.filter((field) => !userData[field]);
+
+    if (emptyFields.length > 0) {
+      // If any required field is empty, set error messages for each empty field
+      const errorMessages = {};
+      emptyFields.forEach((field) => {
+        errorMessages[field] = `Please enter ${
+          field === "phone" ? "a valid 10-digit phone number" : "a value"
+        }`;
+      });
+      setErrors(errorMessages);
+      return;
+    }
+
+    // If all required fields are filled, clear any existing error messages
+    setErrors({});
+
+    // Additional validation for phone number
     if (!phoneRegex.test(userData.phone)) {
       setErrors((prevState) => ({
         ...prevState,
         phone: "Please enter a valid 10-digit phone number",
       }));
-      return; 
+      return;
     }
 
-    // Validate email
-   
+    // Additional validation for email
     if (!emailRegex.test(userData.email)) {
       setErrors((prevState) => ({
         ...prevState,
         email: "Please enter a valid email address",
       }));
-      return; // Don't save if there's an error
+      return;
     }
 
-    // Save data if there are no errors
+    // If all validations pass, save the data
     onSave(userData);
   };
 
