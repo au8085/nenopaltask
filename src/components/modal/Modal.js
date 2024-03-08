@@ -34,25 +34,36 @@ const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
   };
 
   const handleSave = () => {
-    // Validate if any required field is empty
     const requiredFields = ["name", "email", "phone"]; // Add other required fields if necessary
     const emptyFields = requiredFields.filter((field) => !userData[field]);
-
+  
     if (emptyFields.length > 0) {
-      // If any required field is empty, set error messages for each empty field
       const errorMessages = {};
       emptyFields.forEach((field) => {
         errorMessages[field] = `Please enter ${
-          field === "phone" ? "a valid 10-digit phone number" : "a value"
+          field === "phone" ? "a valid 10-digit phone number" : ` a proper ${field} `
         }`;
       });
       setErrors(errorMessages);
       return;
     }
-
-    // If all required fields are filled, clear any existing error messages
+  
+    // Check if any field contains only whitespace characters
+    const whitespaceFields = requiredFields.filter(
+      (field) => userData[field].trim() === ""
+    );
+    if (whitespaceFields.length > 0) {
+      const errorMessages = {};
+      whitespaceFields.forEach((field) => {
+        errorMessages[field] = "Please enter a non-empty value";
+      });
+      setErrors(errorMessages);
+      return;
+    }
+  
+    // If all required fields are filled and don't contain only whitespace, clear any existing error messages
     setErrors({});
-
+  
     // Additional validation for phone number
     if (!phoneRegex.test(userData.phone)) {
       setErrors((prevState) => ({
@@ -61,7 +72,7 @@ const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
       }));
       return;
     }
-
+  
     // Additional validation for email
     if (!emailRegex.test(userData.email)) {
       setErrors((prevState) => ({
@@ -70,10 +81,11 @@ const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
       }));
       return;
     }
-
+  
     // If all validations pass, save the data
     onSave(userData);
   };
+  
 
   return (
     <Modal isOpen={isOpen} backdrop={true}>
@@ -149,7 +161,7 @@ const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
           <div className="row mb-3">
             <div className="col-md-3">
               <Label for="website" className="form-label">
-                Website:
+              <span className="required">*</span> Website:
               </Label>
             </div>
             <div className="col-md-9">
@@ -166,7 +178,7 @@ const ModalComponent = ({ isOpen, closeModal, onSave, initialValue }) => {
         </FormGroup>
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" onClick={closeModal}>
+        <Button className="cancel-button" onClick={closeModal}>
           Cancel
         </Button>{" "}
         <Button color="primary" onClick={handleSave}>

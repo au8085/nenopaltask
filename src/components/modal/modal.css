@@ -14,10 +14,21 @@
     border: 1px solid #ced4da;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
+  .cancel-button {
+    border: 1px solid #000; /* Add border */
+    background-color: transparent; /* Remove background color */
+    color: #000; /* Set text color */
+  }
+  
+  .cancel-button:hover {
+    background-color: white; /* Change background color on hover */
+    color: blue; /* Change text color on hover */
+  }
   
   .form-control:focus {
-    border-color: #80bdff;
+    border-color: red;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline-color: red;
+
   }
   
