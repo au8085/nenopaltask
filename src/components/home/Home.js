@@ -30,7 +30,7 @@ const Home = () => {
     setCurrentIndex(index);
     setInitValue(userData[index]);
     setIsOpen(!isOpen);
-  },[])
+  },[ isOpen, userData])
   
   const closeModal = ()=>{
     setIsOpen(!isOpen); 
