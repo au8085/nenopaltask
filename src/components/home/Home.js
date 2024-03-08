@@ -46,7 +46,7 @@ const Home = () => {
   }, [currentIndex, userData]);
 
   return (
-    <div className="container">
+    <div className="container pdbtm">
       {userData.map((person, index) => (
         <div className="card" key={index}>
           <div className="card-header">

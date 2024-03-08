@@ -43,6 +43,13 @@
   text-align: center;
   padding: 0 !important;
 }
+.pdbtm{
+  padding-bottom: 12px;
+}
+div p i {
+  margin: 0 4px;
+}
+
 
 
 /* Media queries for responsive design */
