@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
   gap: 30px; /* Adjust the gap between cards */
+  margin: 20px 0px;
 }
 
 .card {
@@ -49,7 +50,9 @@
 div p i {
   margin: 0 4px;
 }
-
+.red-color {
+  color: red;
+}
 
 
 /* Media queries for responsive design */

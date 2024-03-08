@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, lazy, Suspense } from "react";
 import "./Home.css";
-import mockData from "../../mockData";
-import ModalComponent from "../modal/modal";
+import mockData from "../../utils/mockData.js";
+
+const ModalComponent = lazy(() => import("../modal/Modal.js"));
 
 const Home = () => {
   const [userData, setUserData] = useState(mockData);
@@ -22,28 +23,34 @@ const Home = () => {
       newData.splice(index, 1);
       setUserData(newData);
     } else {
-      alert("Can not Remove the last item from the list!");
+      alert(" can not remove last item!");
     }
   };
 
-  const toggleModal = useCallback((index) => {
-    setCurrentIndex(index);
-    setInitValue(userData[index]);
-    setIsOpen(!isOpen);
-  },[ isOpen, userData])
-  
-  const closeModal = ()=>{
-    setIsOpen(!isOpen); 
-  }
+  const toggleModal = useCallback(
+    (index) => {
+      setCurrentIndex(index);
+      setInitValue(userData[index]);
+      setIsOpen(!isOpen);
+    },
+    [isOpen, userData]
+  );
 
-  const handleSave = useCallback((updatedData) => {
-    if (currentIndex && updatedData) {
-      const updatedUserData = [...userData];
-      updatedUserData[currentIndex] = updatedData;
-      setUserData(updatedUserData);
-      setIsOpen(false);
-    }
-  }, [currentIndex, userData]);
+  const closeModal = useCallback(() => {
+    setIsOpen(!isOpen);
+  },[isOpen]);
+
+  const handleSave = useCallback(
+    (updatedData) => {
+      if (currentIndex && updatedData) {
+        const updatedUserData = [...userData];
+        updatedUserData[currentIndex] = updatedData;
+        setUserData(updatedUserData);
+        setIsOpen(false);
+      }
+    },
+    [currentIndex, userData]
+  );
 
   return (
     <div className="container pdbtm">
@@ -69,36 +76,32 @@ const Home = () => {
             </div>
           </div>
           <div className="card-footer">
-            <span
-              className="icon"
-              onClick={() => toggleHeartHandler(index)}
-            >
+            <span className="icon" onClick={() => toggleHeartHandler(index)}>
               {!toggle[index] ? (
-                <i className="far fa-heart"></i>
+                <i className="far fa-heart red-color"></i>
               ) : (
                 <i className="fas fa-heart"></i>
               )}
             </span>
             <span className="separator"></span>
             <span className="icon" onClick={() => toggleModal(index)}>
-              <i className="far fa-edit"></i>
+              <i className="far fa-edit  "></i>
             </span>
             <span className="separator"></span>
-            <span
-              className="icon"
-              onClick={() => deleteDataHandler(index)}
-            >
+            <span className="icon" onClick={() => deleteDataHandler(index)}>
               <i className="far fa-trash-alt"></i>
             </span>
           </div>
         </div>
       ))}
-      <ModalComponent
-        isOpen={isOpen}
-        closeModal={closeModal}
-        onSave={handleSave}
-        initialValue={initValue}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ModalComponent
+          isOpen={isOpen}
+          closeModal={closeModal}
+          onSave={handleSave}
+          initialValue={initValue}
+        />
+      </Suspense>
     </div>
   );
 };
