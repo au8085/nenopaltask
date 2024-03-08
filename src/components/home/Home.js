@@ -1,5 +1,5 @@
 import React, { useCallback, useState, lazy, Suspense } from "react";
-import "./home.css";
+import "./Home.css";
 import mockData from "../../utils/mockData.js";
 
 const ModalComponent = lazy(() => import("../modal/Modal.js"));
